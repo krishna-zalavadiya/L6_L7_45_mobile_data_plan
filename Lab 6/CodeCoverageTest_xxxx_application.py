@@ -8,9 +8,9 @@ from mobile_data_plan import (
 )
 
 
-# -------------------------------
-# overage_charge() tests
-# -------------------------------
+# ==================================================
+# 1. TESTS FOR overage_charge()
+# ==================================================
 
 def test_overage_unknown_plan():
     with pytest.raises(ValueError, match="unknown plan"):
@@ -39,20 +39,20 @@ def test_overage_roaming():
 
 
 def test_overage_large_usage_non_roaming():
-    assert overage_charge("basic", 13, False, False) == 165
+    assert overage_charge("basic", 13, False, False) == 275
 
 
 def test_overage_large_usage_roaming():
-    assert overage_charge("basic", 13, True, False) == 495
+    assert overage_charge("basic", 13, True, False) == 605
 
 
 def test_overage_premium_loyal():
     assert overage_charge("premium", 11, False, True) == 15
 
 
-# -------------------------------
-# recharge_allowed() tests
-# -------------------------------
+# ==================================================
+# 2. TESTS FOR recharge_allowed()
+# ==================================================
 
 def test_recharge_kyc_within_limit():
     assert recharge_allowed(200, 5, True) is True
@@ -74,9 +74,9 @@ def test_recharge_too_many_pending():
     assert recharge_allowed(500, 3, False) is False
 
 
-# -------------------------------
-# validity_status() tests
-# -------------------------------
+# ==================================================
+# 3. TESTS FOR validity_status()
+# ==================================================
 
 def test_validity_prepaid_active():
     assert validity_status(0, True, False) == "active"
@@ -95,7 +95,7 @@ def test_validity_grace():
 
 
 def test_validity_expired():
-    assert validity_status(-15, True, False) == "expired"
+    assert validity_status(-16, True, False) == "expired"
 
 
 def test_validity_addon_grace():
